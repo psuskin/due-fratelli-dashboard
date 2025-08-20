@@ -10,7 +10,7 @@ const MENU_OPTIONS = [
   { value: 'desserkarte-due.pdf', label: 'Desserkarte' },
   { value: 'hauptspeisekarte-due.pdf', label: 'Hauptspeisekarte' },
   { value: 'mittagskarte-due.pdf', label: 'Mittagskarte' },
-  { value: 'tagesempfehlung-due.pdf', label: 'Tagesempfehlung' }
+  { value: 'tagesempfehlung-due.pdf', label: 'Tagesempfehlung' },
 ];
 
 interface MenuSelectorProps {
@@ -22,23 +22,23 @@ interface MenuSelectorProps {
 export default function MenuSelector({
   selectedMenu,
   onMenuChange,
-  className = ''
+  className = '',
 }: MenuSelectorProps) {
   return (
     <div className={`mb-8 ${className}`}>
-      <label className="block text-sm font-semibold text-[var(--foreground)] mb-3 font-[var(--font-fjalla-one)]">
+      <label className="block text-sm font-semibold text-[var(--foreground)] mb-3  ">
         Select Menu Type
       </label>
       <Select value={selectedMenu} onValueChange={onMenuChange}>
-        <SelectTrigger className="w-full px-4 py-3 border border-[var(--border)] rounded-xl focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent transition-all duration-200 bg-white text-[var(--foreground)] h-auto font-[var(--font-fjalla-one)]">
+        <SelectTrigger className="w-full px-4 py-3 border border-[var(--border)] rounded-xl focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent transition-all duration-200 bg-white text-[var(--foreground)] h-auto  ">
           <SelectValue placeholder="Choose a menu type..." />
         </SelectTrigger>
         <SelectContent className="bg-white border border-[var(--border)] rounded-xl shadow-lg">
           {MENU_OPTIONS.map((option) => (
-            <SelectItem 
-              key={option.value} 
+            <SelectItem
+              key={option.value}
               value={option.value}
-              className="px-4 py-2 hover:bg-[var(--accent)] focus:bg-[var(--accent)] cursor-pointer font-[var(--font-fjalla-one)]"
+              className="px-4 py-2 hover:bg-[var(--accent)] focus:bg-[var(--accent)] cursor-pointer  "
             >
               {option.label}
             </SelectItem>

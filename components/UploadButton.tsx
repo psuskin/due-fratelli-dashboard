@@ -9,13 +9,13 @@ export default function UploadButton({
   onUpload,
   disabled,
   isUploading,
-  className = ''
+  className = '',
 }: UploadButtonProps) {
   return (
     <button
       onClick={onUpload}
       disabled={disabled}
-      className={`w-full bg-[var(--primary)] hover:bg-[var(--secondary)] disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200 transform hover:scale-[1.02] disabled:hover:scale-100 font-[var(--font-fjalla-one)] ${className}`}
+      className={`w-full bg-[var(--primary)] hover:bg-[var(--secondary)] disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200 transform hover:scale-[1.02] disabled:hover:scale-100 ${className}`}
     >
       {isUploading ? (
         <div className="flex items-center justify-center space-x-2">
