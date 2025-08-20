@@ -83,8 +83,8 @@ export default function Home() {
       <BackgroundText text="Unser Menü " />
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-2xl mx-auto">
-          <div className="bg-white rounded-2xl shadow-xl border border-[var(--border)] overflow-hidden relative z-10">
-            <div className="p-8">
+          <div className="bg-white rounded-3xl shadow-xl shadow-black/5 border border-border overflow-hidden relative z-10">
+            <div className="p-7">
               <FileUpload
                 selectedFile={selectedFile}
                 onFileSelect={setSelectedFile}

@@ -36,15 +36,15 @@ export default function FileUpload({
   }
 
   return (
-    <div className={`mb-8 ${className}`}>
-      <label className="block text-sm font-semibold text-[var(--foreground)] mb-3  ">
+    <div className={`mb-8 pt- ${className}`}>
+      {/* <label className="block text-sm font-semibold text-[var(--foreground)] mb-3  ">
         Select PDF File
-      </label>
+      </label> */}
       <div
-        className={`relative border-2 border-dashed rounded-xl p-8 text-center transition-all duration-200 ${
+        className={`relative border-2 border-dashed rounded-lg p-10 text-center transition-all duration-200 ${
           dragActive
-            ? 'border-[var(--primary)] bg-[var(--accent)]/20'
-            : 'border-[var(--border)] hover:border-[var(--primary)]/50'
+            ? 'border-primary bg-[var(--accent)]/20'
+            : 'border-[var(--border)] hover:border-primary/50'
         }`}
         onDragEnter={onDragEnter}
         onDragLeave={onDragLeave}
@@ -61,7 +61,7 @@ export default function FileUpload({
         <div className="space-y-4">
           <div className="w-16 h-16 mx-auto bg-[var(--accent)] rounded-full flex items-center justify-center">
             <svg
-              className="w-8 h-8 text-[var(--primary)]"
+              className="w-8 h-8 text-primary"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
