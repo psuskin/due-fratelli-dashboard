@@ -15,7 +15,7 @@ export default function UploadButton({
     <button
       onClick={onUpload}
       disabled={disabled}
-      className={`w-full bg-[var(--primary)] hover:bg-[#dcb34c] disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-semibold py-4 px-6 rounded-lg transition-all duration-200 transform cursor-pointer hover:transform-y-[1.02] disabled:hover:scale-100 ${className}`}
+      className={`w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-3 sm:py-4 px-4 sm:px-6 rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base ${className}`}
     >
       {isUploading ? (
         <div className="flex items-center justify-center space-x-2">

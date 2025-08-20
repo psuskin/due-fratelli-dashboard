@@ -4,10 +4,10 @@ interface FooterProps {
 
 export default function Footer({ className = '' }: FooterProps) {
   return (
-    <div className={`text-center mt-8 ${className}`}>
-      <p className="text-sm text-[var(--foreground)]/60  ">
+    <footer className={`text-center mt-6 sm:mt-8 ${className}`}>
+      <p className="text-xs sm:text-sm text-[var(--foreground)]/60">
         Powered by Due Fratelli Restaurant Management
       </p>
-    </div>
+    </footer>
   );
 }

@@ -36,12 +36,12 @@ export default function FileUpload({
   }
 
   return (
-    <div className={`mb-8 pt- ${className}`}>
+    <div className={`mb-6 sm:mb-8 ${className}`}>
       {/* <label className="block text-sm font-semibold text-[var(--foreground)] mb-3  ">
         Select PDF File
       </label> */}
       <div
-        className={`relative border-2 border-dashed rounded-lg p-10 text-center transition-all duration-200 ${
+        className={`relative border-2 border-dashed rounded-lg p-6 sm:p-8 lg:p-10 text-center transition-all duration-200 ${
           dragActive
             ? 'border-primary bg-[var(--accent)]/20'
             : 'border-[var(--border)] hover:border-primary/50'
@@ -58,10 +58,10 @@ export default function FileUpload({
           onChange={handleFileSelect}
           className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
         />
-        <div className="space-y-4">
-          <div className="w-16 h-16 mx-auto bg-[var(--accent)] rounded-full flex items-center justify-center">
+        <div className="space-y-3 sm:space-y-4">
+          <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto bg-[var(--accent)] rounded-full flex items-center justify-center">
             <svg
-              className="w-8 h-8 text-primary"
+              className="w-6 h-6 sm:w-8 sm:h-8 text-primary"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -75,10 +75,10 @@ export default function FileUpload({
             </svg>
           </div>
           <div>
-            <p className="text-lg font-medium text-[var(--foreground)]  ">
+            <p className="text-base sm:text-lg font-medium text-[var(--foreground)] break-all">
               {selectedFile ? selectedFile.name : 'Drop your PDF here'}
             </p>
-            <p className="text-sm text-[var(--foreground)]/60 mt-1">or click to browse files</p>
+            <p className="text-xs sm:text-sm text-[var(--foreground)]/60 mt-1">or click to browse files</p>
           </div>
         </div>
       </div>

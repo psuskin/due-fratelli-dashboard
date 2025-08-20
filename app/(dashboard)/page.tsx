@@ -81,10 +81,26 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-gradient-due flex items-center justify-center relative">
       <BackgroundText text="Unser Menü " />
-      <div className="container mx-auto px-4 py-12">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12">
+        <div className="block md:hidden pb-6">
+          <div className="">
+            <h3 className=" lg:-top-8 text-lg lg:text-2xl text-black/70 tracking-[0.2em] uppercase">
+              Ristorante
+            </h3>
+            <h1 className="uppercase text-2xl sm:text-3xl md:text-[3.8rem] font-bold text-black mb-2 -mt-1.5">
+              Due Fratelli
+            </h1>
+          </div>
+          <div className="">
+            <p className="text-sm font-medium">Menu Upload Portal</p>
+            <p className="text-xs sm:text-sm opacity-80">
+              Upload new menu PDFs to update the restaurant website
+            </p>
+          </div>
+        </div>
         <div className="max-w-2xl mx-auto">
-          <div className="bg-white rounded-3xl shadow-xl shadow-black/5 border border-border overflow-hidden relative z-10">
-            <div className="p-7">
+          <div className="bg-white rounded-2xl sm:rounded-3xl shadow-xl shadow-black/5 border border-border overflow-hidden relative z-10">
+            <div className="p-4 sm:p-6 lg:p-7">
               <FileUpload
                 selectedFile={selectedFile}
                 onFileSelect={setSelectedFile}
