@@ -4,9 +4,10 @@ interface StatusMessageProps {
   status: 'idle' | 'success' | 'error' | 'warning';
   message?: string;
   className?: string;
+  version?: number;
 }
 
-export default function StatusMessage({ status, message, className = '' }: StatusMessageProps) {
+export default function StatusMessage({ status, message, className = '', version = 0 }: StatusMessageProps) {
   const [isVisible, setIsVisible] = useState(false);
   const [shouldRender, setShouldRender] = useState(false);
 
@@ -39,7 +40,7 @@ export default function StatusMessage({ status, message, className = '' }: Statu
       setIsVisible(false);
       setShouldRender(false);
     }
-  }, [status, message]);
+  }, [status, message, version]);
 
   if (!shouldRender || status === 'idle') return null;
 

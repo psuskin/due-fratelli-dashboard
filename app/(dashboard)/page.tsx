@@ -17,16 +17,19 @@ export default function Home() {
   const [uploadStatus, setUploadStatus] = useState<'idle' | 'success' | 'error' | 'warning'>('idle');
   const [statusMessage, setStatusMessage] = useState('');
   const [dragActive, setDragActive] = useState(false);
+  const [statusVersion, setStatusVersion] = useState(0);
 
   const handleValidationFeedback = (message: string) => {
     if (!message) {
       setUploadStatus('idle');
       setStatusMessage('');
+      setStatusVersion((prev) => prev + 1);
       return;
     }
 
     setUploadStatus('warning');
     setStatusMessage(message);
+    setStatusVersion((prev) => prev + 1);
   };
 
   const handleDrag = (e: React.DragEvent) => {
@@ -78,6 +81,7 @@ export default function Home() {
     setIsUploading(true);
     setUploadStatus('idle');
     setStatusMessage('');
+    setStatusVersion((prev) => prev + 1);
 
     try {
       const url = `${WEBHOOK_URL}?filename=${encodeURIComponent(selectedMenu)}`;
@@ -93,16 +97,19 @@ export default function Home() {
       if (response.ok) {
         setUploadStatus('success');
         setStatusMessage('Menu uploaded successfully!');
+        setStatusVersion((prev) => prev + 1);
         setSelectedFile(null);
         setSelectedMenu('');
       } else {
         setUploadStatus('error');
         setStatusMessage('Upload failed. Please try again.');
+        setStatusVersion((prev) => prev + 1);
       }
     } catch (error) {
       console.error('Upload error:', error);
       setUploadStatus('error');
       setStatusMessage('Upload failed. Please try again.');
+      setStatusVersion((prev) => prev + 1);
     } finally {
       setIsUploading(false);
     }
@@ -151,7 +158,7 @@ export default function Home() {
               />
             </div>
           </div>
-          <StatusMessage status={uploadStatus} message={statusMessage} />
+          <StatusMessage status={uploadStatus} message={statusMessage} version={statusVersion} />
 
           {/* <Footer /> */}
         </div>
