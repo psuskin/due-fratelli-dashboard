@@ -8,13 +8,26 @@ import UploadButton from '@/components/UploadButton';
 import { useState } from 'react';
 
 const WEBHOOK_URL = 'https://susko.app.n8n.cloud/webhook/1a96c281-cea5-49b0-b144-6c185409dc6d';
+const MAX_FILE_SIZE_BYTES = 1024 * 1024; // 1MB
 
 export default function Home() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [selectedMenu, setSelectedMenu] = useState<string>('');
   const [isUploading, setIsUploading] = useState(false);
-  const [uploadStatus, setUploadStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [uploadStatus, setUploadStatus] = useState<'idle' | 'success' | 'error' | 'warning'>('idle');
+  const [statusMessage, setStatusMessage] = useState('');
   const [dragActive, setDragActive] = useState(false);
+
+  const handleValidationFeedback = (message: string) => {
+    if (!message) {
+      setUploadStatus('idle');
+      setStatusMessage('');
+      return;
+    }
+
+    setUploadStatus('warning');
+    setStatusMessage(message);
+  };
 
   const handleDrag = (e: React.DragEvent) => {
     e.preventDefault();
@@ -32,17 +45,30 @@ export default function Home() {
     setDragActive(false);
 
     const files = e.dataTransfer.files;
-    if (files && files[0] && files[0].type === 'application/pdf') {
-      setSelectedFile(files[0]);
-      setUploadStatus('idle');
-    }
-  };
+    const file = files && files[0];
 
-  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (files && files[0] && files[0].type === 'application/pdf') {
-      setSelectedFile(files[0]);
-      setUploadStatus('idle');
+    if (!file) {
+      return;
+    }
+
+    const isPdf = file.type === 'application/pdf';
+    const withinSizeLimit = file.size <= MAX_FILE_SIZE_BYTES;
+
+    if (isPdf && withinSizeLimit) {
+      setSelectedFile(file);
+      handleValidationFeedback('');
+      return;
+    }
+
+    setSelectedFile(null);
+
+    if (!isPdf) {
+      handleValidationFeedback('Only PDF files are allowed.');
+      return;
+    }
+
+    if (!withinSizeLimit) {
+      handleValidationFeedback('The PDF must be 1 MB or smaller.');
     }
   };
 
@@ -51,6 +77,7 @@ export default function Home() {
 
     setIsUploading(true);
     setUploadStatus('idle');
+    setStatusMessage('');
 
     try {
       const url = `${WEBHOOK_URL}?filename=${encodeURIComponent(selectedMenu)}`;
@@ -65,14 +92,17 @@ export default function Home() {
 
       if (response.ok) {
         setUploadStatus('success');
+        setStatusMessage('Menu uploaded successfully!');
         setSelectedFile(null);
         setSelectedMenu('');
       } else {
         setUploadStatus('error');
+        setStatusMessage('Upload failed. Please try again.');
       }
     } catch (error) {
       console.error('Upload error:', error);
       setUploadStatus('error');
+      setStatusMessage('Upload failed. Please try again.');
     } finally {
       setIsUploading(false);
     }
@@ -109,6 +139,7 @@ export default function Home() {
                 onDragLeave={handleDrag}
                 onDragOver={handleDrag}
                 onDrop={handleDrop}
+                onValidationError={handleValidationFeedback}
               />
 
               <MenuSelector selectedMenu={selectedMenu} onMenuChange={setSelectedMenu} />
@@ -120,7 +151,7 @@ export default function Home() {
               />
             </div>
           </div>
-          <StatusMessage status={uploadStatus} />
+          <StatusMessage status={uploadStatus} message={statusMessage} />
 
           {/* <Footer /> */}
         </div>

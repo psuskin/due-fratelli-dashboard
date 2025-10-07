@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 
 interface StatusMessageProps {
-  status: 'idle' | 'success' | 'error';
+  status: 'idle' | 'success' | 'error' | 'warning';
+  message?: string;
   className?: string;
 }
 
-export default function StatusMessage({ status, className = '' }: StatusMessageProps) {
+export default function StatusMessage({ status, message, className = '' }: StatusMessageProps) {
   const [isVisible, setIsVisible] = useState(false);
   const [shouldRender, setShouldRender] = useState(false);
 
@@ -38,7 +39,7 @@ export default function StatusMessage({ status, className = '' }: StatusMessageP
       setIsVisible(false);
       setShouldRender(false);
     }
-  }, [status]);
+  }, [status, message]);
 
   if (!shouldRender || status === 'idle') return null;
 
@@ -64,7 +65,9 @@ export default function StatusMessage({ status, className = '' }: StatusMessageP
                 d="M5 13l4 4L19 7"
               />
             </svg>
-            <p className="text-green-800 font-medium text-sm sm:text-base">Menu uploaded successfully!</p>
+            <p className="text-green-800 font-medium text-sm sm:text-base">
+              {message || 'Menu uploaded successfully!'}
+            </p>
           </div>
         </div>
       )}
@@ -85,7 +88,32 @@ export default function StatusMessage({ status, className = '' }: StatusMessageP
                 d="M6 18L18 6M6 6l12 12"
               />
             </svg>
-            <p className="text-red-800 font-medium text-sm sm:text-base">Upload failed. Please try again.</p>
+            <p className="text-red-800 font-medium text-sm sm:text-base">
+              {message || 'Upload failed. Please try again.'}
+            </p>
+          </div>
+        </div>
+      )}
+
+      {status === 'warning' && (
+        <div className="p-3 sm:p-4 bg-amber-50 border border-amber-200 rounded-2xl">
+          <div className="flex items-center space-x-2">
+            <svg
+              className="w-5 h-5 text-amber-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 9v2m0 4h.01M5.93 19h12.14a2 2 0 001.73-3l-6.07-10.5a2 2 0 00-3.46 0L4.2 16a2 2 0 001.73 3z"
+              />
+            </svg>
+            <p className="text-amber-800 font-medium text-sm sm:text-base">
+              {message || 'Please check the file requirements.'}
+            </p>
           </div>
         </div>
       )}

@@ -9,6 +9,7 @@ interface FileUploadProps {
   onDragOver: (e: React.DragEvent) => void;
   onDrop: (e: React.DragEvent) => void;
   className?: string;
+  onValidationError?: (message: string) => void;
 }
 
 export default function FileUpload({
@@ -20,13 +21,39 @@ export default function FileUpload({
   onDragOver,
   onDrop,
   className = '',
+  onValidationError,
 }: FileUploadProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
-    if (files && files[0] && files[0].type === 'application/pdf') {
-      onFileSelect(files[0]);
+    const MAX_SIZE_BYTES = 1024 * 1024; // 1MB
+
+    if (!files || !files[0]) {
+      return;
+    }
+
+    const file = files[0];
+    const isPdf = file.type === 'application/pdf';
+    const withinSizeLimit = file.size <= MAX_SIZE_BYTES;
+
+    if (isPdf && withinSizeLimit) {
+      onFileSelect(file);
+      onValidationError?.('');
+      return;
+    }
+
+    // Clear invalid selection
+    e.target.value = '';
+    onFileSelect(null);
+
+    if (!isPdf) {
+      onValidationError?.('Only PDF files are allowed.');
+      return;
+    }
+
+    if (!withinSizeLimit) {
+      onValidationError?.('The PDF must be 1 MB or smaller.');
     }
   };
 
@@ -54,7 +81,7 @@ export default function FileUpload({
         <input
           ref={fileInputRef}
           type="file"
-          accept=".pdf"
+          accept="application/pdf"
           onChange={handleFileSelect}
           className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
         />
